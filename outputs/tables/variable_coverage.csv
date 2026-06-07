@@ -1,0 +1,7 @@
+Model,Profitability,Leverage,Liquidity,Activity,CF_Operations,CF_Ratio_Rich,Cash_ICR_Signal,4_Category_Output,Notes
+Altman Z'' (1995),1,1,1,1,0,0,0,0,"No CFO variable; uses EBIT, RE, WC"
+Altman Z' (1983),1,1,1,1,0,0,0,0,Same structure as Z''; replaces MVE with BVE
+Ohlson O-Score (1980),1,1,1,0,1,0,0,0,One CFO term (FUTL=CFO/TL); SIZE needs absolute TA
+Zmijewski (1984),1,1,1,0,0,0,0,0,Fully ratio-implementable; no CFO variable
+Springate (1978),1,0,1,1,0,0,0,0,No CFO; EBT/CL approximation adds uncertainty
+Proposed Framework,1,1,1,1,1,1,1,1,ICR+Cash-ICR taxonomy; 6 dedicated cash-flow predictors

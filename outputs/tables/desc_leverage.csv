@@ -1,0 +1,7 @@
+,Debt_to_Assets,Debt_to_Assets,Debt_to_Assets,Debt_to_Equity,Debt_to_Equity,Debt_to_Equity,LT_Debt_to_Assets,LT_Debt_to_Assets,LT_Debt_to_Assets,TL_to_TA,TL_to_TA,TL_to_TA,TA_to_Equity,TA_to_Equity,TA_to_Equity,Net_Debt_to_EBITDA,Net_Debt_to_EBITDA,Net_Debt_to_EBITDA
+,mean,median,std,mean,median,std,mean,median,std,mean,median,std,mean,median,std,mean,median,std
+Label,,,,,,,,,,,,,,,,,,
+Healthy,0.3108,0.2752,0.2429,1.1323,0.586,3.8496,0.159,0.0952,0.1819,0.5763,0.5753,0.257,3.1928,2.2888,6.6045,2.5194,1.7015,7.0742
+Acct_Distress,0.5329,0.4652,0.3889,0.9434,0.6291,7.585,0.2629,0.1435,0.2742,0.8247,0.7873,0.4164,3.0576,2.3782,12.9009,5.5471,4.0718,22.7018
+Cash_Distress,0.2728,0.2432,0.2245,1.0904,0.5547,3.3984,0.1215,0.0866,0.145,0.5931,0.6045,0.2684,3.6607,2.4504,7.3571,2.3088,1.5233,9.0337
+Full_Distress,0.4613,0.3391,0.4205,0.6927,0.3438,6.4687,0.2028,0.0958,0.2469,0.7555,0.7005,0.4673,2.6876,1.8596,11.6035,1.7489,1.0683,21.9496

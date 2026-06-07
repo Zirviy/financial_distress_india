@@ -1,0 +1,14 @@
+# Data
+data/raw/
+data/processed/
+*.pkl
+*.joblib
+
+# Sensitive datasets
+outputs/figures/distressiq/data/
+
+# Environment
+.env
+venv/
+__pycache__/
+*.pyc

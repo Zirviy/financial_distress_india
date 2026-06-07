@@ -1,0 +1,7 @@
+,WC_to_TA,WC_to_TA,WC_to_TA,Cash_Conversion_Cycle,Cash_Conversion_Cycle,Cash_Conversion_Cycle
+,mean,median,std,mean,median,std
+Label,,,,,,
+Healthy,-0.1895,-0.184,0.2408,-158.4931,59.7258,1940.1218
+Acct_Distress,-0.0106,-0.0453,0.3968,-66.3106,53.4478,2977.9099
+Cash_Distress,-0.2423,-0.2431,0.2578,-155.5822,56.7589,2186.9805
+Full_Distress,-0.043,-0.0826,0.4148,-397.5772,40.9739,3392.2096

@@ -1,0 +1,6 @@
+Model,Market_Data_Required,Absolute_TA_Required,RE_Directly_Available,Cash_Flow_Dimension,CashICR_Equivalent,Binary_Output_Only,Original_Sample_Context,Indian_Applicability_Notes
+Altman Z'' (1995),No,No,No (proxy: ROA),Absent,None,Yes,US non-manufacturing / emerging,Most appropriate Z-variant; no market data needed
+Altman Z' (1983),No,No,No (proxy: ROA),Absent,None,Yes,US private firms,Requires book equity; suited to private firms
+Ohlson O-Score (1980),No,YES (SIZE),N/A,Partial (1/9 variables),None,Yes,US public firms (NYSE/AMEX),SIZE variable fails for ratio-only datasets
+Zmijewski (1984),No,No,N/A,Absent,None,Yes,US public firms,Cleanest implementation from ratios; well-suited
+Springate (1978),No,No,N/A,Absent,None,Yes,US/Canadian firms,C-variable (EBT/CL) requires approximation

@@ -1,0 +1,5 @@
+Category,N_transitions,Persistence_%,Top_exit_destination,Exit_pct
+Healthy,38006,85.5,Cash_Distress,8.6
+Acct_Distress,4750,44.5,Healthy,29.4
+Cash_Distress,4697,19.6,Healthy,69.5
+Full_Distress,3642,44.5,Acct_Distress,29.8

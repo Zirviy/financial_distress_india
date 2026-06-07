@@ -1,0 +1,7 @@
+Var1,Var2,Family1,Family2,Spearman_r
+NCF_to_Debt,NCF_to_TA,Cash_Flow,Cash_Flow,0.93
+Current_Ratio,WC_to_TA,Liquidity,Working_Capital,-0.912
+Debt_to_Equity,TA_to_Equity,Leverage,Leverage,0.863
+EBITDA_Margin,Operating_Profit_Margin,Profitability,Profitability,0.861
+ROA,Net_Profit_Margin,Profitability,Profitability,0.848
+CFO_to_CL,CFO_to_Debt,Cash_Flow,Cash_Flow,0.789

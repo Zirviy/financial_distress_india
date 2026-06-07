@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DistressIQ — Financial Distress Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+
+<style>
+/* ── Design tokens ──────────────────────────────────────────────────────────── */
+:root {
+  --ink:       #0a0a0f;
+  --ink-soft:  #3a3a4a;
+  --ink-muted: #7a7a90;
+  --paper:     #f7f6f2;
+  --cream:     #eeece6;
+  --gold:      #c9a84c;
+  --gold-light:#f0d98a;
+  --danger:    #c0392b;
+  --danger-bg: #fdf0ee;
+  --safe:      #1a6b3a;
+  --safe-bg:   #edf7f1;
+  --warn:      #b5630a;
+  --warn-bg:   #fef5eb;
+  --border:    rgba(10,10,15,0.10);
+  --shadow-sm: 0 2px 8px rgba(10,10,15,0.08);
+  --shadow-md: 0 8px 32px rgba(10,10,15,0.12);
+  --shadow-lg: 0 24px 64px rgba(10,10,15,0.16);
+  --r:         12px;
+}
+
+/* ── Reset ──────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(201,168,76,0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(10,10,15,0.04) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Nav ────────────────────────────────────────────────────────────────────── */
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 64px;
+  background: rgba(247,246,242,0.90);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-logo .logo-mark {
+  width: 32px; height: 32px; background: var(--ink);
+  border-radius: 8px; display: grid; place-items: center;
+}
+.nav-logo .logo-mark svg { width: 18px; height: 18px; }
+.nav-logo .logo-name {
+  font-family: 'DM Serif Display', serif; font-size: 1.15rem;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.nav-badge {
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted);
+  border: 1px solid var(--border); padding: 4px 10px; border-radius: 20px;
+}
+
+/* ── Hero ───────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative; z-index: 1;
+  max-width: 900px; margin: 0 auto;
+  padding: 80px 32px 0; text-align: center;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 24px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; display: block; width: 24px; height: 1px;
+  background: var(--gold); opacity: 0.5;
+}
+h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1.1; letter-spacing: -0.03em; color: var(--ink); margin-bottom: 20px;
+}
+h1 em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 1.05rem; font-weight: 300; color: var(--ink-soft);
+  line-height: 1.65; max-width: 600px; margin: 0 auto 48px;
+}
+
+/* ── Stats row ──────────────────────────────────────────────────────────────── */
+.stats-row { display: flex; justify-content: center; gap: 0; margin-bottom: 56px; }
+.stat { padding: 16px 32px; border-right: 1px solid var(--border); text-align: center; }
+.stat:last-child { border-right: none; }
+.stat-value {
+  font-family: 'DM Serif Display', serif; font-size: 1.7rem;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.stat-label {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--ink-muted); margin-top: 2px;
+}
+
+/* ── Upload card ────────────────────────────────────────────────────────────── */
+.card-wrap { position: relative; z-index: 1; max-width: 720px; margin: 0 auto; padding: 0 32px 80px; }
+.upload-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden; }
+.card-header {
+  padding: 28px 36px 20px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title { font-family: 'DM Serif Display', serif; font-size: 1.25rem; letter-spacing: -0.02em; }
+.card-sub { font-size: 0.8rem; color: var(--ink-muted); margin-top: 2px; }
+.model-chip {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--ink); color: #fff;
+  font-size: 0.7rem; font-weight: 500; letter-spacing: 0.06em;
+  padding: 6px 12px; border-radius: 20px;
+}
+.model-chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #4ade80; animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+.card-body { padding: 32px 36px; }
+
+/* ── Drop zone ──────────────────────────────────────────────────────────────── */
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: var(--r);
+  padding: 48px 32px; text-align: center; cursor: pointer;
+  transition: all 0.2s ease; background: var(--paper); position: relative;
+}
+.drop-zone:hover, .drop-zone.dragover { border-color: var(--gold); background: rgba(201,168,76,0.04); }
+.drop-zone input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.drop-icon {
+  width: 52px; height: 52px; margin: 0 auto 16px;
+  background: var(--cream); border-radius: 14px; display: grid; place-items: center;
+}
+.drop-icon svg { width: 24px; height: 24px; color: var(--ink-soft); }
+.drop-title { font-size: 0.95rem; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.drop-sub { font-size: 0.8rem; color: var(--ink-muted); }
+.format-pills { display: flex; justify-content: center; gap: 8px; margin-top: 16px; }
+.pill {
+  font-size: 0.68rem; font-weight: 500; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+  border: 1px solid var(--border); color: var(--ink-soft);
+}
+
+/* ── File info ──────────────────────────────────────────────────────────────── */
+.file-info { display: none; align-items: center; gap: 14px; padding: 14px 18px; background: var(--cream); border-radius: var(--r); margin-top: 16px; }
+.file-info.visible { display: flex; }
+.file-icon { width: 40px; height: 40px; background: var(--ink); border-radius: 10px; display: grid; place-items: center; flex-shrink: 0; }
+.file-icon svg { width: 20px; height: 20px; color: #fff; }
+.file-name { font-size: 0.88rem; font-weight: 500; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file-size { font-size: 0.75rem; color: var(--ink-muted); }
+
+/* ── Submit button ──────────────────────────────────────────────────────────── */
+.btn-analyze {
+  width: 100%; margin-top: 20px; padding: 16px 24px;
+  background: var(--ink); color: #fff; border: none; border-radius: var(--r);
+  font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+  letter-spacing: 0.02em; cursor: pointer; transition: all 0.2s ease;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  position: relative; overflow: hidden;
+}
+.btn-analyze:hover:not(:disabled) { background: #1a1a2e; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(10,10,15,0.2); }
+.btn-analyze:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+.btn-analyze .spinner { display: none; width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+.btn-analyze.loading .spinner { display: block; }
+.btn-analyze.loading .btn-text { display: none; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Results ────────────────────────────────────────────────────────────────── */
+#results { display: none; }
+#results.visible { display: block; }
+.result-card {
+  margin-top: 24px; border-radius: 20px; overflow: hidden;
+  border: 1px solid var(--border); box-shadow: var(--shadow-md);
+  animation: slideUp 0.4s cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── Verdict banner ─────────────────────────────────────────────────────────── */
+.verdict { padding: 32px 36px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+.verdict.high     { background: var(--danger-bg); }
+.verdict.elevated { background: #fff5f5; }
+.verdict.moderate { background: var(--warn-bg); }
+.verdict.low      { background: var(--safe-bg); }
+.verdict-left { flex: 1; }
+.verdict-label { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+.verdict.high     .verdict-label { color: var(--danger); }
+.verdict.elevated .verdict-label { color: #e74c3c; }
+.verdict.moderate .verdict-label { color: var(--warn); }
+.verdict.low      .verdict-label { color: var(--safe); }
+.verdict-firm { font-family: 'DM Serif Display', serif; font-size: 1.6rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 4px; }
+.verdict-fy { font-size: 0.78rem; color: var(--ink-muted); font-weight: 500; letter-spacing: 0.04em; margin-bottom: 4px; }
+.verdict-category { font-size: 0.88rem; color: var(--ink-soft); }
+
+/* ── Gauge ──────────────────────────────────────────────────────────────────── */
+.prob-gauge { text-align: center; flex-shrink: 0; }
+.gauge-ring { position: relative; width: 100px; height: 100px; margin: 0 auto 8px; }
+.gauge-ring svg { width: 100px; height: 100px; transform: rotate(-90deg); }
+.gauge-track { fill: none; stroke: rgba(0,0,0,0.08); stroke-width: 8; }
+.gauge-fill { fill: none; stroke-width: 8; stroke-linecap: round; stroke-dasharray: 251.2; stroke-dashoffset: 251.2; transition: stroke-dashoffset 1.2s cubic-bezier(0.16,1,0.3,1); }
+.gauge-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); text-align: center; }
+.gauge-pct { font-family: 'DM Serif Display', serif; font-size: 1.5rem; line-height: 1; letter-spacing: -0.03em; }
+.gauge-sub { font-size: 0.6rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); margin-top: 2px; }
+.prob-label { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-muted); }
+
+/* ── Result details ─────────────────────────────────────────────────────────── */
+.result-details { background: #fff; padding: 28px 36px; border-top: 1px solid var(--border); }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.detail-item label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); display: block; margin-bottom: 4px; }
+.detail-item .val { font-size: 0.92rem; font-weight: 500; color: var(--ink); }
+
+/* ── Section title ──────────────────────────────────────────────────────────── */
+.section-title {
+  font-family: 'DM Serif Display', serif; font-size: 1rem;
+  letter-spacing: -0.01em; margin-bottom: 14px;
+  display: flex; align-items: center; gap: 10px;
+}
+.section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+/* ── SHAP bars ──────────────────────────────────────────────────────────────── */
+.shap-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px; }
+.shap-col-title {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 12px; display: flex; align-items: center; gap: 6px;
+}
+.shap-col-title.risk-title { color: var(--danger); }
+.shap-col-title.safe-title { color: var(--safe); }
+.shap-col-title .icon { font-size: 0.9rem; }
+
+.shap-bar-row { margin-bottom: 10px; }
+.shap-bar-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+.shap-bar-label { font-size: 0.75rem; color: var(--ink-soft); flex: 1; padding-right: 8px; line-height: 1.3; }
+.shap-bar-meta { font-size: 0.68rem; color: var(--ink-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.shap-track { height: 5px; background: var(--cream); border-radius: 3px; overflow: hidden; }
+.shap-fill { height: 100%; border-radius: 3px; transition: width 0.8s cubic-bezier(0.16,1,0.3,1); width: 0%; }
+.shap-fill.risk-fill { background: var(--danger); }
+.shap-fill.safe-fill { background: var(--safe); }
+.shap-impact-high   { opacity: 1.0; }
+.shap-impact-medium { opacity: 0.75; }
+.shap-impact-low    { opacity: 0.5; }
+.shap-empty { font-size: 0.8rem; color: var(--ink-muted); font-style: italic; }
+
+/* ── Ratios grid ────────────────────────────────────────────────────────────── */
+.ratios-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 24px; }
+.ratio-item { background: var(--paper); border-radius: 8px; padding: 10px 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.ratio-name { font-size: 0.72rem; color: var(--ink-muted); font-weight: 400; }
+.ratio-val { font-size: 0.82rem; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+.ratio-val.missing { color: var(--ink-muted); font-weight: 400; font-style: italic; }
+
+/* ── Demo mode ──────────────────────────────────────────────────────────────── */
+.demo-section { background: var(--cream); border-radius: var(--r); padding: 20px 24px; margin-bottom: 24px; }
+.demo-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+.demo-badge {
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+  background: var(--ink); color: #fff; padding: 3px 9px; border-radius: 20px;
+}
+.demo-title { font-size: 0.85rem; font-weight: 500; color: var(--ink-soft); }
+.demo-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.demo-item label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); display: block; margin-bottom: 3px; }
+.demo-item .dval { font-size: 0.88rem; font-weight: 500; color: var(--ink); }
+.demo-match-yes { color: var(--safe); }
+.demo-match-no  { color: var(--danger); }
+
+/* ── Missing note ───────────────────────────────────────────────────────────── */
+.missing-note { font-size: 0.78rem; color: var(--ink-muted); margin-bottom: 16px; }
+
+/* ── Disclaimer ─────────────────────────────────────────────────────────────── */
+.disclaimer { padding: 20px 36px; background: var(--paper); border-top: 1px solid var(--border); font-size: 0.75rem; color: var(--ink-muted); line-height: 1.6; }
+
+/* ── Error card ─────────────────────────────────────────────────────────────── */
+.error-card { display: none; margin-top: 24px; padding: 20px 24px; background: var(--danger-bg); border: 1px solid rgba(192,57,43,0.2); border-radius: var(--r); color: var(--danger); font-size: 0.88rem; animation: slideUp 0.3s ease; }
+.error-card.visible { display: block; }
+
+/* ── Footer ─────────────────────────────────────────────────────────────────── */
+footer { position: relative; z-index: 1; text-align: center; padding: 32px; border-top: 1px solid var(--border); font-size: 0.78rem; color: var(--ink-muted); }
+footer strong { color: var(--ink-soft); }
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  nav { padding: 0 20px; }
+  .hero { padding: 48px 20px 0; }
+  .card-wrap { padding: 0 20px 48px; }
+  .card-header, .card-body, .result-details { padding: 20px; }
+  .verdict { flex-direction: column; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .ratios-grid { grid-template-columns: repeat(2, 1fr); }
+  .shap-cols { grid-template-columns: 1fr; }
+  .demo-grid { grid-template-columns: 1fr 1fr; }
+  .stats-row { flex-wrap: wrap; }
+  .stat { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <a href="/" class="nav-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round">
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+      </svg>
+    </div>
+    <span class="logo-name">DistressIQ</span>
+  </a>
+  <span class="nav-badge">LightGBM · AUC 0.9042</span>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-eyebrow">Financial Intelligence Platform</div>
+  <h1>Predict earnings distress<br><em>before it strikes</em></h1>
+  <p class="hero-sub">
+    Upload any financial statement — Excel, CSV, or PDF. Claude extracts the ratios.
+    Our LightGBM model, trained on 73,255 Indian firm-years, flags earnings distress
+    one year ahead.
+  </p>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-value">0.90</div><div class="stat-label">AUC Score</div></div>
+    <div class="stat"><div class="stat-value">73K+</div><div class="stat-label">Firm-Years Trained</div></div>
+    <div class="stat"><div class="stat-value">27</div><div class="stat-label">Financial Ratios</div></div>
+    <div class="stat"><div class="stat-value">6.4%</div><div class="stat-label">False Alarm Rate</div></div>
+  </div>
+</section>
+
+<!-- Upload card -->
+<div class="card-wrap">
+  <div class="upload-card">
+    <div class="card-header">
+      <div>
+        <div class="card-title">Analyse a Firm</div>
+        <div class="card-sub">Upload financial statements — any format accepted</div>
+      </div>
+      <div class="model-chip"><span class="dot"></span>Model A · Live</div>
+    </div>
+
+    <div class="card-body">
+      <!-- Drop zone -->
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" accept=".xlsx,.xls,.csv,.pdf">
+        <div class="drop-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <div class="drop-title">Drop your financial statement here</div>
+        <div class="drop-sub">or click to browse files</div>
+        <div class="format-pills">
+          <span class="pill">xlsx</span><span class="pill">xls</span>
+          <span class="pill">csv</span><span class="pill">pdf</span>
+        </div>
+      </div>
+
+      <!-- File info -->
+      <div class="file-info" id="fileInfo">
+        <div class="file-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+        </div>
+        <div>
+          <div class="file-name" id="fileName">—</div>
+          <div class="file-size" id="fileSize">—</div>
+        </div>
+      </div>
+
+      <!-- Submit -->
+      <button class="btn-analyze" id="analyzeBtn" disabled>
+        <div class="spinner"></div>
+        <span class="btn-text">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:6px">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          Run Distress Analysis
+        </span>
+      </button>
+
+      <!-- Error -->
+      <div class="error-card" id="errorCard"></div>
+
+      <!-- Results -->
+      <div id="results">
+        <div class="result-card">
+
+          <!-- Verdict banner -->
+          <div class="verdict" id="verdictBanner">
+            <div class="verdict-left">
+              <div class="verdict-label" id="riskLabel">—</div>
+              <div class="verdict-firm" id="firmName">—</div>
+              <div class="verdict-fy" id="fyDisplay">—</div>
+              <div class="verdict-category" id="categoryText">—</div>
+            </div>
+            <div class="prob-gauge">
+              <div class="gauge-ring">
+                <svg viewBox="0 0 100 100">
+                  <circle class="gauge-track" cx="50" cy="50" r="40"/>
+                  <circle class="gauge-fill" id="gaugeFill" cx="50" cy="50" r="40"/>
+                </svg>
+                <div class="gauge-center">
+                  <div class="gauge-pct" id="gaugePct">—</div>
+                  <div class="gauge-sub">risk</div>
+                </div>
+              </div>
+              <div class="prob-label">Distress Probability</div>
+            </div>
+          </div>
+
+          <!-- Detail grid -->
+          <div class="result-details">
+            <div class="detail-grid">
+              <div class="detail-item">
+                <label>Predicted Category</label>
+                <div class="val" id="predCategory">—</div>
+              </div>
+              <div class="detail-item">
+                <label>Model Used</label>
+                <div class="val">LightGBM Model A</div>
+              </div>
+              <div class="detail-item">
+                <label>Financial Year</label>
+                <div class="val" id="fyVal">—</div>
+              </div>
+              <div class="detail-item">
+                <label>Predicting For</label>
+                <div class="val" id="predYearVal">—</div>
+              </div>
+              <div class="detail-item">
+                <label>Decision Threshold</label>
+                <div class="val" id="thresholdVal">—</div>
+              </div>
+              <div class="detail-item">
+                <label>File Type</label>
+                <div class="val" id="fileTypeVal">—</div>
+              </div>
+            </div>
+
+            <!-- SHAP section -->
+            <div class="section-title">SHAP Explainability — Risk Drivers</div>
+            <div class="shap-cols">
+              <div>
+                <div class="shap-col-title risk-title"><span class="icon">↑</span> Top Risk Drivers</div>
+                <div id="riskDrivers"></div>
+              </div>
+              <div>
+                <div class="shap-col-title safe-title"><span class="icon">↓</span> Top Protective Factors</div>
+                <div id="protectiveFactors"></div>
+              </div>
+            </div>
+
+            <!-- Demo mode section -->
+            <div class="demo-section" id="demoSection" style="display:none;">
+              <div class="demo-header">
+                <span class="demo-badge">Demo Mode</span>
+                <span class="demo-title">Known outcome from panel dataset</span>
+              </div>
+              <div class="demo-grid">
+                <div class="demo-item">
+                  <label>Matched Company</label>
+                  <div class="dval" id="demoCompany">—</div>
+                </div>
+                <div class="demo-item">
+                  <label>Known Outcome</label>
+                  <div class="dval" id="demoOutcome">—</div>
+                </div>
+                <div class="demo-item">
+                  <label>Prediction Matched</label>
+                  <div class="dval" id="demoMatch">—</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Ratios computed -->
+            <div class="section-title">Computed Financial Ratios</div>
+            <div class="ratios-grid" id="ratiosGrid"></div>
+            <div class="missing-note" id="missingNote" style="display:none;"></div>
+          </div>
+
+          <div class="disclaimer">
+            <strong>Research use only.</strong> This prediction is generated by a machine learning model
+            trained on historical Indian firm data (2018–2023). It is not financial advice and should
+            not be the sole basis for credit or investment decisions. Model A (Earnings Distress):
+            AUC 0.9042, Type I Error 6.4%, Type II Error 32.6% on 2023 holdout data.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  Built on <strong>LightGBM</strong> · Ratios extracted by <strong>Claude AI</strong> ·
+  SHAP explanations via <strong>TreeExplainer</strong> ·
+  Trained on <strong>18,342 Indian firms</strong> · Out-of-time test: 2023
+</footer>
+
+<script>
+// ── State ─────────────────────────────────────────────────────────────────────
+let selectedFile = null;
+
+// ── Elements ──────────────────────────────────────────────────────────────────
+const dropZone   = document.getElementById('dropZone');
+const fileInput  = document.getElementById('fileInput');
+const fileInfo   = document.getElementById('fileInfo');
+const fileName   = document.getElementById('fileName');
+const fileSize   = document.getElementById('fileSize');
+const analyzeBtn = document.getElementById('analyzeBtn');
+const results    = document.getElementById('results');
+const errorCard  = document.getElementById('errorCard');
+
+function formatBytes(bytes) {
+  if (bytes < 1024)    return bytes + ' B';
+  if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+  return (bytes / 1048576).toFixed(1) + ' MB';
+}
+
+function handleFile(file) {
+  selectedFile = file;
+  fileName.textContent = file.name;
+  fileSize.textContent = formatBytes(file.size);
+  fileInfo.classList.add('visible');
+  analyzeBtn.disabled = false;
+  results.classList.remove('visible');
+  errorCard.classList.remove('visible');
+}
+
+fileInput.addEventListener('change', e => { if (e.target.files[0]) handleFile(e.target.files[0]); });
+dropZone.addEventListener('dragover',  e => { e.preventDefault(); dropZone.classList.add('dragover'); });
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+  e.preventDefault(); dropZone.classList.remove('dragover');
+  const f = e.dataTransfer.files[0];
+  if (f) handleFile(f);
+});
+
+// ── Analyse ───────────────────────────────────────────────────────────────────
+analyzeBtn.addEventListener('click', async () => {
+  if (!selectedFile) return;
+  analyzeBtn.classList.add('loading');
+  analyzeBtn.disabled = true;
+  errorCard.classList.remove('visible');
+  results.classList.remove('visible');
+
+  const fd = new FormData();
+  fd.append('file', selectedFile);
+
+  try {
+    const resp = await fetch('/predict', { method: 'POST', body: fd });
+    const data = await resp.json();
+    if (!resp.ok) throw new Error(data.detail || 'Server error');
+    renderResults(data);
+  } catch (err) {
+    errorCard.textContent = '⚠ ' + (err.message || 'Something went wrong.');
+    errorCard.classList.add('visible');
+  } finally {
+    analyzeBtn.classList.remove('loading');
+    analyzeBtn.disabled = false;
+  }
+});
+
+// ── Render results ────────────────────────────────────────────────────────────
+function renderResults(data) {
+  const riskLevel = (data.risk_level || 'LOW').toLowerCase();
+
+  // Verdict banner
+  const banner = document.getElementById('verdictBanner');
+  banner.className = 'verdict ' + riskLevel;
+
+  document.getElementById('riskLabel').textContent =
+    data.risk_level + ' RISK — ' + (data.predicted_distressed ? 'DISTRESSED' : 'NOT DISTRESSED');
+  document.getElementById('firmName').textContent     = data.firm_name || 'Analysed Firm';
+  document.getElementById('fyDisplay').textContent    = data.financial_year + ' data  →  ' + data.prediction_year + ' outlook';
+  document.getElementById('categoryText').textContent = data.category_detail || data.category;
+
+  // Gauge
+  const pct = data.probability_pct;
+  document.getElementById('gaugePct').textContent = pct + '%';
+  const fill = document.getElementById('gaugeFill');
+  const colors = { high:'#c0392b', elevated:'#e74c3c', moderate:'#b5630a', low:'#1a6b3a' };
+  fill.style.stroke = colors[riskLevel] || '#c0392b';
+  setTimeout(() => {
+    fill.style.strokeDashoffset = 251.2 - (pct / 100) * 251.2;
+  }, 100);
+
+  // Detail grid
+  document.getElementById('predCategory').textContent = data.category;
+  document.getElementById('fyVal').textContent        = data.financial_year;
+  document.getElementById('predYearVal').textContent  = data.prediction_year;
+  document.getElementById('thresholdVal').textContent = 'p ≥ ' + data.threshold_used;
+  document.getElementById('fileTypeVal').textContent  = data.file_type || '—';
+
+  // SHAP
+  renderShap(data.shap || {});
+
+  // Demo mode
+  renderDemo(data.demo_mode);
+
+  // Ratios grid
+  const grid = document.getElementById('ratiosGrid');
+  grid.innerHTML = '';
+  const ratios  = data.ratios_computed || {};
+  const missing = new Set(data.missing_ratios || []);
+  Object.entries(ratios).forEach(([key, val]) => {
+    const isMissing = missing.has(key);
+    const div = document.createElement('div');
+    div.className = 'ratio-item';
+    div.innerHTML = `
+      <span class="ratio-name">${key.replace(/_/g,' ')}</span>
+      <span class="ratio-val ${isMissing ? 'missing' : ''}">${isMissing ? 'n/a' : val}</span>
+    `;
+    grid.appendChild(div);
+  });
+
+  // Missing note
+  const note = document.getElementById('missingNote');
+  if (missing.size > 0) {
+    note.style.display = 'block';
+    note.textContent   = `${missing.size} ratio(s) were null and set to 0 as fallback: ` +
+      [...missing].slice(0,5).join(', ') + (missing.size > 5 ? '…' : '');
+  } else {
+    note.style.display = 'none';
+  }
+
+  results.classList.add('visible');
+  results.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── SHAP bars ─────────────────────────────────────────────────────────────────
+function renderShap(shap) {
+  const riskEl      = document.getElementById('riskDrivers');
+  const protectEl   = document.getElementById('protectiveFactors');
+  riskEl.innerHTML    = '';
+  protectEl.innerHTML = '';
+
+  if (shap.error) {
+    riskEl.innerHTML    = `<p class="shap-empty">SHAP unavailable: ${shap.error}</p>`;
+    protectEl.innerHTML = `<p class="shap-empty">—</p>`;
+    return;
+  }
+
+  const riskDrivers   = shap.top_risk_drivers     || [];
+  const safeDrivers   = shap.top_protective_drivers || [];
+
+  // Compute max abs shap across both lists for normalisation
+  const allShap = [
+    ...riskDrivers.map(d => Math.abs(d.shap_value)),
+    ...safeDrivers.map(d => Math.abs(d.shap_value)),
+  ];
+  const maxShap = allShap.length ? Math.max(...allShap) : 1;
+
+  function buildBars(drivers, container, isMissing = false) {
+    if (!drivers.length) {
+      container.innerHTML = '<p class="shap-empty">None detected</p>';
+      return;
+    }
+    drivers.forEach(d => {
+      const pct    = Math.min(100, (Math.abs(d.shap_value) / maxShap) * 100);
+      const fillCls = isMissing ? 'safe-fill' : 'risk-fill';
+      const impactCls = `shap-impact-${d.impact || 'low'}`;
+      const row = document.createElement('div');
+      row.className = `shap-bar-row ${impactCls}`;
+      row.innerHTML = `
+        <div class="shap-bar-top">
+          <span class="shap-bar-label">${d.display_name}</span>
+          <span class="shap-bar-meta">val&nbsp;${d.feature_value.toFixed(3)}&nbsp;&nbsp;Δ&nbsp;${d.shap_value.toFixed(3)}</span>
+        </div>
+        <div class="shap-track">
+          <div class="shap-fill ${fillCls}" style="width:0%" data-target="${pct.toFixed(1)}"></div>
+        </div>`;
+      container.appendChild(row);
+    });
+    // Animate bars after DOM insert
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      container.querySelectorAll('.shap-fill').forEach(el => {
+        el.style.width = el.dataset.target + '%';
+      });
+    }));
+  }
+
+  buildBars(riskDrivers,  riskEl,    false);
+  buildBars(safeDrivers,  protectEl, true);
+}
+
+// ── Demo mode ─────────────────────────────────────────────────────────────────
+function renderDemo(demo) {
+  const section = document.getElementById('demoSection');
+  if (!demo || !demo.found_in_dataset) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = 'block';
+  document.getElementById('demoCompany').textContent  = demo.matched_company || '—';
+  document.getElementById('demoOutcome').textContent  = demo.known_label_display || demo.known_label || '—';
+
+  const matchEl = document.getElementById('demoMatch');
+  if (demo.prediction_matched) {
+    matchEl.textContent  = '✓ Yes';
+    matchEl.className    = 'dval demo-match-yes';
+  } else {
+    matchEl.textContent  = '✗ No';
+    matchEl.className    = 'dval demo-match-no';
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+Score,Category,N,Mean,Median,Std,P25,P75
+Altman Z'',Healthy,53461,1.0921,0.8353,2.0511,-0.0489,1.8563
+Altman Z'',Acct_Distress,7135,0.5666,0.3187,2.8762,-0.8472,1.647
+Altman Z'',Cash_Distress,7033,0.4909,0.1563,2.2771,-0.6612,1.168
+Altman Z'',Full_Distress,5626,0.1977,0.0605,3.7071,-1.4066,1.5316
+Altman Z',Healthy,53461,2.2166,1.9515,1.4306,1.3224,2.7532
+Altman Z',Acct_Distress,7135,1.1908,0.7734,1.5502,0.2997,1.6127
+Altman Z',Cash_Distress,7033,2.4928,2.0425,1.8646,1.2926,3.1224
+Altman Z',Full_Distress,5626,1.1926,0.8191,1.7951,0.2192,1.7614
+Ohlson P(distress),Healthy,53461,0.8452,0.9108,0.1674,0.7871,0.9619
+Ohlson P(distress),Acct_Distress,7135,0.9207,0.9741,0.1374,0.9256,0.9892
+Ohlson P(distress),Cash_Distress,7033,0.8571,0.9283,0.172,0.8153,0.9686
+Ohlson P(distress),Full_Distress,5626,0.8868,0.9656,0.179,0.8745,0.9881
+Zmijewski P(distress),Healthy,53461,0.2269,0.0951,0.2792,0.0073,0.371
+Zmijewski P(distress),Acct_Distress,7135,0.538,0.5829,0.3806,0.1353,0.9342
+Zmijewski P(distress),Cash_Distress,7033,0.2565,0.1293,0.2912,0.0107,0.443
+Zmijewski P(distress),Full_Distress,5626,0.4807,0.4475,0.4004,0.0473,0.9256
+Springate S,Healthy,53461,0.3755,0.3811,0.8661,0.0446,0.7133
+Springate S,Acct_Distress,7135,0.323,0.2404,0.845,-0.0514,0.6291
+Springate S,Cash_Distress,7033,0.5446,0.4323,0.8223,0.0644,0.8699
+Springate S,Full_Distress,5626,0.2781,0.1859,0.7824,-0.1015,0.5744

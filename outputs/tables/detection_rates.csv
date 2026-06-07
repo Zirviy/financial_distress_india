@@ -1,0 +1,29 @@
+Benchmark,Taxonomy_Category,N_Total,N_Flagged_Distressed,Detection_Rate_Pct
+Altman Z''_strict,Healthy,53461,30705,57.4
+Altman Z''_strict,Acct_Distress,7135,4773,66.9
+Altman Z''_strict,Cash_Distress,7033,5188,73.8
+Altman Z''_strict,Full_Distress,5626,3896,69.2
+Altman Z''_broad,Healthy,53461,45576,85.3
+Altman Z''_broad,Acct_Distress,7135,5974,83.7
+Altman Z''_broad,Cash_Distress,7033,6292,89.5
+Altman Z''_broad,Full_Distress,5626,4655,82.7
+Altman Z'_strict,Healthy,53461,11692,21.9
+Altman Z'_strict,Acct_Distress,7135,4664,65.4
+Altman Z'_strict,Cash_Distress,7033,1617,23.0
+Altman Z'_strict,Full_Distress,5626,3523,62.6
+Altman Z'_broad,Healthy,53461,41716,78.0
+Altman Z'_broad,Acct_Distress,7135,6430,90.1
+Altman Z'_broad,Cash_Distress,7033,5017,71.3
+Altman Z'_broad,Full_Distress,5626,4931,87.6
+Ohlson,Healthy,53461,50518,94.5
+Ohlson,Acct_Distress,7135,6922,97.0
+Ohlson,Cash_Distress,7033,6648,94.5
+Ohlson,Full_Distress,5626,5292,94.1
+Zmijewski,Healthy,53461,9508,17.8
+Zmijewski,Acct_Distress,7135,3894,54.6
+Zmijewski,Cash_Distress,7033,1505,21.4
+Zmijewski,Full_Distress,5626,2676,47.6
+Springate,Healthy,53461,43856,82.0
+Springate,Acct_Distress,7135,5959,83.5
+Springate,Cash_Distress,7033,5241,74.5
+Springate,Full_Distress,5626,4773,84.8

@@ -1,0 +1,7 @@
+,Current_Ratio,Current_Ratio,Current_Ratio,Quick_Ratio,Quick_Ratio,Quick_Ratio,Cash_to_CL,Cash_to_CL,Cash_to_CL
+,mean,median,std,mean,median,std,mean,median,std
+Label,,,,,,,,,
+Healthy,1.9855,1.4791,1.8216,1.2843,1.0124,1.1453,0.3383,0.1003,0.6708
+Acct_Distress,1.7096,1.1165,2.2906,1.0378,0.843,1.2186,0.2403,0.0484,0.6288
+Cash_Distress,2.1936,1.5244,2.2039,1.3582,1.0293,1.3114,0.3623,0.112,0.7206
+Full_Distress,1.9881,1.2059,2.5956,1.2308,0.9498,1.4485,0.4022,0.0795,0.8807

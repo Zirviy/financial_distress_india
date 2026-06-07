@@ -1,0 +1,5 @@
+Category,Short,N_observations,N_unique_firms,Pct_of_total
+Healthy,H,53461,15751,72.98
+Acct_Distress,AD,7135,4221,9.74
+Cash_Distress,CD,7033,5205,9.6
+Full_Distress,FD,5626,3397,7.68

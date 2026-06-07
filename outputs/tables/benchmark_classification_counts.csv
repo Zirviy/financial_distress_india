@@ -1,0 +1,8 @@
+Benchmark,N_Distressed,N_NonDistressed,Pct_Distressed,Total
+Altman Z'' (strict),44562,28693,60.8,73255
+Altman Z'' (broad),62497,10758,85.3,73255
+Altman Z' (strict),21496,51759,29.3,73255
+Altman Z' (broad),58094,15161,79.3,73255
+Ohlson,69380,3875,94.7,73255
+Zmijewski,17583,55672,24.0,73255
+Springate,59829,13426,81.7,73255

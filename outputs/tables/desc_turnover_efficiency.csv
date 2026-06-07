@@ -1,0 +1,7 @@
+,Total_Asset_Turnover,Total_Asset_Turnover,Total_Asset_Turnover,Inventory_Turnover,Inventory_Turnover,Inventory_Turnover,Receivables_Turnover,Receivables_Turnover,Receivables_Turnover,Payables_Turnover,Payables_Turnover,Payables_Turnover,WC_Turnover,WC_Turnover,WC_Turnover
+,mean,median,std,mean,median,std,mean,median,std,mean,median,std,mean,median,std
+Label,,,,,,,,,,,,,,,
+Healthy,1.3937,1.1077,1.244,38.3834,8.7885,125.7406,20.3178,6.0164,65.0059,26.4944,9.2928,66.1054,6.5677,4.197,30.9505
+Acct_Distress,0.9269,0.5082,1.2935,43.1107,8.6369,139.1229,25.0043,5.7658,76.757,22.761,6.6243,65.558,2.9087,0.4735,28.8162
+Cash_Distress,1.8215,1.3044,1.7089,34.6863,8.5625,121.6344,23.709,6.1024,74.3698,33.2781,8.285,84.8729,8.4877,4.4471,32.514
+Full_Distress,1.0209,0.6204,1.3216,42.7604,8.7652,142.6776,30.2888,6.0,88.7499,21.7691,5.8346,68.543,2.9561,0.7074,27.4139
